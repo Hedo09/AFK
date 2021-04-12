@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.picketlink:picketlink-impl:2.5.5.SP12">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/picketlink/picketlink-impl/2.5.5.SP12/picketlink-impl-2.5.5.SP12.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/picketlink/picketlink-impl/2.5.5.SP12/picketlink-impl-2.5.5.SP12-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/picketlink/picketlink-impl/2.5.5.SP12/picketlink-impl-2.5.5.SP12-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,104 @@
+/* General styles */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 10em 20% 60px 20%;
+}
+
+p {
+    text-align: justify;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+}
+
+/* Form adjustments */
+
+.error-block {
+    color: red;
+}
+
+label.col-form-label {
+    text-align: left;
+}
+
+/* Modal adjustments */
+
+.modal {
+    position: fixed;
+    top: 0;
+    z-index: 1050;
+    display: block;
+}
+
+.modal-body {
+    height: 400px;
+    overflow-y: auto;
+}
+
+/* Tooltip adjustments */
+
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    white-space: normal;
+}
+
+.tooltip-container .tooltip-hint {
+    visibility: hidden;
+    width: 200px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 110%;
+}
+
+.tooltip-container .tooltip-hint::after {
+    content: "";
+    position: absolute;
+    top: 30%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+
+.tooltip-container:hover .tooltip-hint {
+    visibility: visible;
+}
+
+/* Acclaim badge sizing */
+
+iframe.acclaim-badge {
+    width: 250px;
+    height: 270px;
+}
+
+/* reCaptcha align to center */
+
+.captcha-container {
+    margin: 1em auto !important;
+    width: auto !important;
+    height: auto !important;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    text-align: -o-center;
+    text-align: -ms-center;
+}
