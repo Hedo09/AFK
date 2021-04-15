@@ -7,7 +7,8 @@ import Cart from "./components/Cart";
 import ProductListing from "./components/ProductListing";
 import CategorySwitcher from "./components/CategorySwitcher";
 import {getCartDataToPost, getCategories, getProductsPerCategory, postData} from "./util/util";
-import urls from "./util/constants"
+import urls from "./util/constants";
+import Login from "./components/Login";
 
 class App extends React.Component {
     state = {
@@ -16,7 +17,7 @@ class App extends React.Component {
         quantities: [],
         productsInCart: [],
         cart: {},
-        pageState: 'shop'
+        pageState: 'shop',
     };
 
 
@@ -63,12 +64,23 @@ class App extends React.Component {
     };
 
     checkoutOnClick = (e) => {
+        console.log(this.state.customerName);
         let data = getCartDataToPost(this.state.cart, this.state.customerName, this.state.customerAddress);
         postData(urls.ORDER_URL, data);
         this.setState({quantities: [], cart: [], productsInCart: []});
         this.refreshCategories();
         this.refreshProductPerCategory();
     };
+
+    sendUser = (e) => {
+        console.log(this.state.userName);
+        let data = {name: this.state.userName, password: this.state.password};
+        postData(urls.LOGIN_URL,data);
+    }
+
+    userDataChange = (e) => {
+        this.setState({[e.currentTarget.id]: e.currentTarget.value});
+    }
 
     changePageState = (e) => {
         this.setState({pageState: e.currentTarget.dataset.state});
@@ -95,6 +107,8 @@ class App extends React.Component {
                 }
 
                 {this.state.pageState === "chat" ? (<WebChat/>) : ""}
+
+                {this.state.pageState === "login" ? (<Login onSendUser={this.sendUser} onUserDataChange={this.userDataChange}/>): ""}
             </div>
         );
     }

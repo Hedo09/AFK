@@ -2,6 +2,8 @@ package hu.bme.aut.webshop;
 
 import hu.bme.aut.webshop.domain.Category;
 import hu.bme.aut.webshop.domain.Product;
+import hu.bme.aut.webshop.auth.data.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +14,7 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.Queue;
@@ -24,33 +27,14 @@ import java.util.Properties;
 @EnableJms
 public class WebshopApplication {
 
+    @Autowired
+    private UserRepository repository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public static void main(String[] args) {
         SpringApplication.run(WebshopApplication.class, args);
-    }
-
-    public static Map toMap(Context ctx) throws NamingException {
-        String namespace = ctx instanceof InitialContext ? ctx.getNameInNamespace() : "";
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        NamingEnumeration<NameClassPair> list = ctx.list(namespace);
-        while (list.hasMoreElements()) {
-            NameClassPair next = list.next();
-            String name = next.getName();
-            String jndiPath = namespace + name;
-            Object lookup;
-            try {
-                Object tmp = ctx.lookup(jndiPath);
-                if (tmp instanceof Context) {
-                    lookup = toMap((Context) tmp);
-                } else {
-                    lookup = tmp.toString();
-                }
-            } catch (Throwable t) {
-                lookup = t.getMessage();
-            }
-            map.put(name, lookup);
-
-        }
-        return map;
     }
 
     @Bean
@@ -58,7 +42,6 @@ public class WebshopApplication {
         Properties env = new Properties();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
         env.put(Context.PROVIDER_URL, "http-remoting://127.0.0.1:8080");
-        System.out.println(toMap(new InitialContext(env)));
         return new InitialContext(env);
     }
 

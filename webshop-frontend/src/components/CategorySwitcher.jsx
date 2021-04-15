@@ -21,6 +21,7 @@ const CategorySwitcher = (props) => (
                     <li data-state="shop" onClick={props.onChangePageState}><a><span className="glyphicon glyphicon-th"></span></a></li>
                     <li data-state="cart" onClick={props.onChangePageState}><a><span className="glyphicon glyphicon-shopping-cart"></span></a></li>
                     <li data-state="chat" onClick={props.onChangePageState}><a><span className="glyphicon glyphicon-comment"></span></a></li>
+                    <li data-state="login" onClick={props.onChangePageState}><a><span className="glyphicon glyphicon-user"></span></a></li>
                 </ul>
             </div>
         </div>
