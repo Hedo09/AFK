@@ -9,6 +9,8 @@ import CategorySwitcher from "./components/CategorySwitcher";
 import {getCartDataToPost, getCategories, getProductsPerCategory, postData} from "./util/util";
 import urls from "./util/constants";
 import Login from "./components/Login";
+import Signin from "./components/Signin";
+import LoginFailed from "./components/LoginFailed";
 
 class App extends React.Component {
     state = {
@@ -18,6 +20,7 @@ class App extends React.Component {
         productsInCart: [],
         cart: {},
         pageState: 'shop',
+        signedin: false,
     };
 
 
@@ -72,12 +75,18 @@ class App extends React.Component {
         this.refreshProductPerCategory();
     };
 
-    sendUser = (e) => {
+    sendUserLogin = (e) => {
         console.log(this.state.userName);
         let data = {name: this.state.userName, password: this.state.password};
         postData(urls.LOGIN_URL,data);
     }
 
+    sendUserSignin = (e) => {
+        console.log(this.state.userName);
+        let data = {name: this.state.userName, password: this.state.password};
+        this.state.signedin = true;
+        postData(urls.SIGNIN_URL,data);
+    }
     userDataChange = (e) => {
         this.setState({[e.currentTarget.id]: e.currentTarget.value});
     }
@@ -101,14 +110,17 @@ class App extends React.Component {
                                      onQuantityChange={this.quantitiesOnChange}/>) : ""
                 }
 
-                {this.state.pageState === "cart" ?
+                {(this.state.pageState === "cart" && this.state.signedin) ?
                     (<Cart cart={this.state.cart} products={this.state.productsInCart}
                            onCheckoutDataChange={this.checkoutDataOnChange} onCheckout={this.checkoutOnClick}/>) : ""
                 }
+                {(this.state.pageState === "cart" && !this.state.signedin) ? (<LoginFailed/>) : "" }
+
 
                 {this.state.pageState === "chat" ? (<WebChat/>) : ""}
 
-                {this.state.pageState === "login" ? (<Login onSendUser={this.sendUser} onUserDataChange={this.userDataChange}/>): ""}
+                {this.state.pageState === "login" ? (<Login onSendUser={this.sendUserLogin} onUserDataChange={this.userDataChange}/>): ""}
+                {this.state.pageState === "signin" ? (<Signin onSendUser={this.sendUserSignin} onUserDataChange={this.userDataChange}/>): ""}
             </div>
         );
     }

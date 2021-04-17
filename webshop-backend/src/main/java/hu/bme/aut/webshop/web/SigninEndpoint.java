@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/login")
-public class LoginEndpoint {
+@RequestMapping("/api/signin")
+public class SigninEndpoint {
 
     @Autowired
     private UserRepository repository;
@@ -25,24 +25,10 @@ public class LoginEndpoint {
 
     @PostMapping
     public User save(@RequestBody User u) {
-        logger.info("You tried to log in.");
+        logger.info("Received a new user.");
         logger.info("Name: " + u.getName());
         logger.info("Password: "+ u.getPassword());
-        List<User> userList = repository.findAll();
-        User user = null;
-        for (int i = 0; i<userList.size();i++) {
-            System.out.println(userList.get(i).getName());
-            if(userList.get(i).equals(u)){
-                user = userList.get(i);
-            }
-        }
-        if(user == null) {
-            System.out.println("failed");
-        }
-        else {
-            System.out.println("OK");
-        }
-        //jmsTemplate.send(s -> s.createObjectMessage(u));
-        return user;
+        repository.save(u);
+        return u;
     }
 }
