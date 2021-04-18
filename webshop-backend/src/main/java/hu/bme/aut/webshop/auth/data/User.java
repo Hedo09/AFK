@@ -9,6 +9,8 @@ import java.util.List;
 @Entity
 public class User {
 
+    public static final String ROLE_ADMIN ="ROLE_ADMIN";
+
     @Id
     private String name;
     private String password;

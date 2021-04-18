@@ -1,9 +1,11 @@
 package hu.bme.aut.webshop;
 
+import hu.bme.aut.webshop.auth.data.User;
 import hu.bme.aut.webshop.domain.Category;
 import hu.bme.aut.webshop.domain.Product;
 import hu.bme.aut.webshop.auth.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -20,12 +22,13 @@ import javax.jms.ConnectionFactory;
 import javax.jms.Queue;
 import javax.naming.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 @SpringBootApplication
 @EnableJms
-public class WebshopApplication {
+public class WebshopApplication implements CommandLineRunner {
 
     @Autowired
     private UserRepository repository;
@@ -35,6 +38,16 @@ public class WebshopApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(WebshopApplication.class, args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        User admin = new User();
+        admin.setName("admin");
+        admin.setPassword(passwordEncoder.encode("admin"));
+        admin.setEnabled(true);
+        admin.setRoles(List.of("ROLE_ADMIN"));
+        repository.save(admin);
     }
 
     @Bean

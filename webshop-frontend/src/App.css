@@ -99,6 +99,6 @@ iframe.acclaim-badge {
     height: auto !important;
     text-align: -webkit-center;
     text-align: -moz-center;
-    text-align: -o-center;
-    text-align: -ms-center;
+    text-align: center; /*-o-*/
+    text-align: center; /*-ms-*/
 }

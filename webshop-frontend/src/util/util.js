@@ -7,7 +7,8 @@ const getData = (url) => {
 };
 
 const postData = (url, body) => {
-    axios.post(url, JSON.stringify(body), {headers : {"Content-Type": "application/json"}})
+
+    axios.post(url, JSON.stringify(body), {headers : {"Content-Type": "application/json"} , auth: {name: "admin", password:"admin"}})
         .then(response => response.data)
 };
 
