@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import './App.css';
 
@@ -6,11 +6,12 @@ import WebChat from "./components/WebChat";
 import Cart from "./components/Cart";
 import ProductListing from "./components/ProductListing";
 import CategorySwitcher from "./components/CategorySwitcher";
-import {getCartDataToPost, getCategories, getProductsPerCategory, postData} from "./util/util";
+import {getCartDataToPost, getCategories, getProductsPerCategory, getUsers, postData, postDataLogin} from "./util/util";
 import urls from "./util/constants";
 import Login from "./components/Login";
 import Signin from "./components/Signin";
 import LoginFailed from "./components/LoginFailed";
+import Modal from "./components/Modal";
 
 class App extends React.Component {
     state = {
@@ -21,6 +22,9 @@ class App extends React.Component {
         cart: {},
         pageState: 'shop',
         signedin: false,
+        currentUserName: "",
+        currentUserPassword: "",
+        authError: false
     };
 
 
@@ -31,6 +35,11 @@ class App extends React.Component {
     refreshProductPerCategory = () => {
         getProductsPerCategory(this.state.currentCategory).then(response => this.setState({products: response._embedded.products}));
     };
+
+    refreshUser = (u) => {
+        this.state.currentUserName = u.name;
+        getUsers(u.name).then((response) => this.setState({currentUserPassword: response.password}));
+    }
 
     categoryOnClick = (e) => {
         let categoryId = e.currentTarget.dataset.id;
@@ -76,16 +85,23 @@ class App extends React.Component {
     };
 
     sendUserLogin = (e) => {
-        console.log(this.state.userName);
+        console.log(this.state.currentUserName);
         let data = {name: this.state.userName, password: this.state.password};
-        postData(urls.LOGIN_URL,data);
+        const promise = postDataLogin(urls.LOGIN_URL, data);
+        promise.catch(function (error) {
+            if (error.response) {
+                this.setState({authError: true});
+            }
+        });
     }
 
-    sendUserSignin = (e) => {
-        console.log(this.state.userName);
+    sendUserSignin = (e) => { // TODO: ha olyan akar regizni, aki már korábban regisztrált, az nincs lekezelve.
         let data = {name: this.state.userName, password: this.state.password};
         this.state.signedin = true;
         postData(urls.SIGNIN_URL,data);
+
+        this.state.currentUserName = this.state.userName;
+        this.state.currentUserPassword = this.state.password;
     }
     userDataChange = (e) => {
         this.setState({[e.currentTarget.id]: e.currentTarget.value});
@@ -111,7 +127,7 @@ class App extends React.Component {
                 }
 
                 {(this.state.pageState === "cart" && this.state.signedin) ?
-                    (<Cart cart={this.state.cart} products={this.state.productsInCart}
+                    (<Cart cart={this.state.cart} products={this.state.productsInCart} user={this.state.currentUserName}
                            onCheckoutDataChange={this.checkoutDataOnChange} onCheckout={this.checkoutOnClick}/>) : ""
                 }
                 {(this.state.pageState === "cart" && !this.state.signedin) ? (<LoginFailed/>) : "" }

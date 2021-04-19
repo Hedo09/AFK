@@ -4,7 +4,7 @@ import CartEntry from "./CartEntry";
 
 const Cart = (props) => (
     <div className="jumbotron">
-        <h2>Your cart</h2>
+        <h2>Your cart({props.user})</h2>
 
         <table className="table table-striped">
             <thead>

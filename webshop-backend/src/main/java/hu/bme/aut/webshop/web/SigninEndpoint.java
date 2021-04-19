@@ -29,11 +29,15 @@ public class SigninEndpoint {
 
     @PostMapping
     public User save(@RequestBody User u) {
+        // rendes regisztráció: mindig helyesen lefut, akármit ad meg
         u.setRoles(List.of("ROLE_USER"));
+        u.setEnabled(true);
+        u.setPassword(passwordEncoder.encode(u.getPassword()));
         logger.info("Received a new user.");
         logger.info("Name: " + u.getName());
-        logger.info("Password: "+ u.getPassword());
+        logger.info("Password: " + u.getPassword());
         repository.save(u);
+
         return u;
     }
 }

@@ -6,13 +6,21 @@ const getData = (url) => {
         .then(response => response.data)
 };
 
-const postData = (url, body) => {
+const postDataLogin =  async (url, body) => {
+    return await axios.post(url, JSON.stringify(body), {
+        headers: {"Content-Type": "application/json"},
+        auth: {username: body.name, password: body.password}
+    });
+};
 
-    axios.post(url, JSON.stringify(body), {headers : {"Content-Type": "application/json"} , auth: {name: "admin", password:"admin"}})
+const postData = (url, body) => {
+    axios.post(url, JSON.stringify(body), {headers: {"Content-Type": "application/json"}})
         .then(response => response.data)
 };
 
 const getCategories = () => getData(urls.CATEGORIES_URL);
+
+const getUsers = (user_name) => getData(urls.USERS_URL+"/"+user_name);
 
 const getProductsPerCategory = (category) => getData(urls.CATEGORIES_URL + '/' + category.id + '/products');
 
@@ -48,7 +56,9 @@ const countSubTotal = (cart, products) => {
 export {
     getData,
     postData,
+    postDataLogin,
     getCategories,
+    getUsers,
     getProductsPerCategory,
     getCartLinesFromCartData,
     getCartDataToPost,

@@ -13,7 +13,7 @@ const CategorySwitcher = (props) => (
                     <span className="icon-bar"></span>
                     <span className="icon-bar"></span>
                 </button>
-                <span className="navbar-brand">Webshop</span>
+                <span className="navbar-brand">Webshop: {props.currentUserName}</span>
             </div>
             <div id="navbar" className="navbar-collapse collapse">
                 <ul className="nav navbar-nav">
@@ -25,7 +25,7 @@ const CategorySwitcher = (props) => (
                     <li data-state="temperature" onClick={props.onChangePageState} className="temprerature"><a className="nav-link">Temperature</a></li>
                     <li data-state="humidity" onClick={props.onChangePageState} className="humidity"><a className="nav-link">Humidity</a></li>
                     <li data-state="soilmoisture" onClick={props.onChangePageState} className="soilmoisture"><a className="nav-link">Soil Moisture</a></li>
-
+                    {!props.signedin ? <li data-state="soilmoisture" onClick={props.onChangePageState} className="soilmoisture"><a className="nav-link">JO</a></li>: ""}
                 </ul>
             </div>
         </div>

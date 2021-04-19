@@ -4,5 +4,7 @@ const ORDER_URL = BASE_URL + "/orders";
 const CHAT_URL = "ws://localhost:8081/chat";
 const LOGIN_URL = BASE_URL + "/login";
 const SIGNIN_URL = BASE_URL + "/signin";
+const USERS_URL = BASE_URL + "/users";
+const ME_URL = BASE_URL+ "/me";
 
-export default {BASE_URL, CATEGORIES_URL, ORDER_URL, CHAT_URL,LOGIN_URL,SIGNIN_URL};
+export default {BASE_URL, CATEGORIES_URL, ORDER_URL, CHAT_URL,LOGIN_URL,SIGNIN_URL,USERS_URL,ME_URL};
