@@ -1,18 +1,7 @@
 import React from 'react';
 
 class Login extends React.Component {
-    state = {
-        username: '',
-        password: ''
-    };
 
-    buttonClick = (e) => {
-        console.log(this.state.username + " ; " + this.state.password);
-    };
-
-    messageOnChange = (e) => {
-        this.setState({[e.currentTarget.id]: e.currentTarget.value});
-    };
 
     render() {
         return (

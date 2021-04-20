@@ -13,19 +13,18 @@ const CategorySwitcher = (props) => (
                     <span className="icon-bar"></span>
                     <span className="icon-bar"></span>
                 </button>
-                <span className="navbar-brand">Webshop: {props.currentUserName}</span>
             </div>
             <div id="navbar" className="navbar-collapse collapse">
                 <ul className="nav navbar-nav">
                     {props.categories.map(c => (<CategoryItem id={c.id} key={c.id} name={c.name} onClick={props.click}/>))}
                     <li data-state="cart" onClick={props.onChangePageState}><a><span className="glyphicon glyphicon-shopping-cart"></span></a></li>
                     <li data-state="chat" onClick={props.onChangePageState}><a><span className="glyphicon glyphicon-comment"></span></a></li>
-                    <li data-state="login" onClick={props.onChangePageState} className="login"><a className="nav-link">Login</a></li>
-                    <li data-state="signin" onClick={props.onChangePageState} className="signin"><a className="nav-link">Sign In</a></li>
                     <li data-state="temperature" onClick={props.onChangePageState} className="temprerature"><a className="nav-link">Temperature</a></li>
                     <li data-state="humidity" onClick={props.onChangePageState} className="humidity"><a className="nav-link">Humidity</a></li>
                     <li data-state="soilmoisture" onClick={props.onChangePageState} className="soilmoisture"><a className="nav-link">Soil Moisture</a></li>
-                    {!props.signedin ? <li data-state="soilmoisture" onClick={props.onChangePageState} className="soilmoisture"><a className="nav-link">JO</a></li>: ""}
+                    <li data-state="login" onClick={props.onChangePageState} className="login"><a className="nav-link">Login</a></li>
+                    <li data-state="signin" onClick={props.onChangePageState} className="signin"><a className="nav-link">Sign In</a></li>
+                    <li data-state="logout" onClick={props.onChangePageState} className="logout"><a className="nav-link">Logout</a></li>
                 </ul>
             </div>
         </div>

@@ -11,7 +11,8 @@ import urls from "./util/constants";
 import Login from "./components/Login";
 import Signin from "./components/Signin";
 import LoginFailed from "./components/LoginFailed";
-import Modal from "./components/Modal";
+import Logout from "./components/Logout";
+import $ from "jquery";
 
 class App extends React.Component {
     state = {
@@ -85,23 +86,30 @@ class App extends React.Component {
     };
 
     sendUserLogin = (e) => {
-        console.log(this.state.currentUserName);
         let data = {name: this.state.userName, password: this.state.password};
         const promise = postDataLogin(urls.LOGIN_URL, data);
-        promise.catch(function (error) {
-            if (error.response) {
-                this.setState({authError: true});
+        promise.then(res => {
+            this.setState({currentUserName: this.state.userName, currentUserPassword: this.state.password});
+            this.setState({signedin: true});
+        }).catch((e) =>
+        {
+            if(e.response) {
+                this.setState({signedin: false});
             }
         });
     }
 
     sendUserSignin = (e) => { // TODO: ha olyan akar regizni, aki már korábban regisztrált, az nincs lekezelve.
         let data = {name: this.state.userName, password: this.state.password};
-        this.state.signedin = true;
         postData(urls.SIGNIN_URL,data);
+    }
 
-        this.state.currentUserName = this.state.userName;
-        this.state.currentUserPassword = this.state.password;
+    userLogoutYes = (e) => {
+        this.setState({signedin: false, currentUserName: "", currentUserPassword: ""});
+        this.setState({pageState: "login"});
+    };
+    userLogoutNo = (e) => {
+        this.setState({pageState: "login"});
     }
     userDataChange = (e) => {
         this.setState({[e.currentTarget.id]: e.currentTarget.value});
@@ -119,7 +127,7 @@ class App extends React.Component {
         return (
             <div>
                 <CategorySwitcher click={this.categoryOnClick} categories={this.state.categories}
-                                  onChangePageState={this.changePageState}/>
+                                  onChangePageState={this.changePageState} isSigned={this.state.signedin}/>
 
                 {this.state.pageState === "shop" ?
                     (<ProductListing products={this.state.products} onAddToCart={this.addtoCartOnClick}
@@ -137,6 +145,7 @@ class App extends React.Component {
 
                 {this.state.pageState === "login" ? (<Login onSendUser={this.sendUserLogin} onUserDataChange={this.userDataChange}/>): ""}
                 {this.state.pageState === "signin" ? (<Signin onSendUser={this.sendUserSignin} onUserDataChange={this.userDataChange}/>): ""}
+                {this.state.pageState === "logout" ? (<Logout onLogoutYes={this.userLogoutYes} onLogoutNo ={this.userLogoutNo} />):""}
             </div>
         );
     }
