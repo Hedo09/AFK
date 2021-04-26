@@ -1,4 +1,4 @@
-package hu.bme.aut.webshop.auth.data;
+package hu.bme.aut.webshop.auth.data.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,9 +1,13 @@
 package hu.bme.aut.webshop;
 
-import hu.bme.aut.webshop.auth.data.User;
+import hu.bme.aut.webshop.auth.data.user.User;
+import hu.bme.aut.webshop.dao.MeasurementRepository;
+import hu.bme.aut.webshop.dao.RpiDataRepository;
 import hu.bme.aut.webshop.domain.Category;
 import hu.bme.aut.webshop.domain.Product;
-import hu.bme.aut.webshop.auth.data.UserRepository;
+import hu.bme.aut.webshop.domain.measurement.Measurement;
+import hu.bme.aut.webshop.auth.data.user.UserRepository;
+import hu.bme.aut.webshop.domain.rpi.RpiData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,9 +25,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.jms.ConnectionFactory;
 import javax.jms.Queue;
 import javax.naming.*;
-import java.util.HashMap;
+import java.sql.Timestamp;
+import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 @SpringBootApplication
@@ -31,7 +35,13 @@ import java.util.Properties;
 public class WebshopApplication implements CommandLineRunner {
 
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private MeasurementRepository measurementRepository;
+
+    @Autowired
+    private RpiDataRepository rpiDataRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -47,7 +57,43 @@ public class WebshopApplication implements CommandLineRunner {
         admin.setPassword(passwordEncoder.encode("admin"));
         admin.setEnabled(true);
         admin.setRoles(List.of("ROLE_ADMIN"));
-        repository.save(admin);
+        userRepository.save(admin);
+
+        // TEST Data
+        Measurement measurement1 = new Measurement();
+        measurement1.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        measurement1.setHumidity(78.7);
+        measurement1.setTemperature(25.8);
+        measurement1.setSoilmoisture(34.1);
+        measurementRepository.save(measurement1);
+
+        Measurement measurement2 = new Measurement();
+        measurement2.setTimestamp(new Timestamp(System.currentTimeMillis()+10));
+        measurement2.setHumidity(97.7);
+        measurement2.setTemperature(36.2);
+        measurement2.setSoilmoisture(78.1);
+        measurementRepository.save(measurement2);
+
+        Measurement measurement3 = new Measurement();
+        measurement3.setTimestamp(new Timestamp(System.currentTimeMillis()+20));
+        measurement3.setHumidity(8.7);
+        measurement3.setTemperature(40.8);
+        measurement3.setSoilmoisture(4.14);
+        measurementRepository.save(measurement3);
+
+        RpiData rpiData1 = new RpiData();
+        rpiData1.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        rpiData1.setMemory(90.1);
+        rpiData1.setCPU(78.6);
+        rpiDataRepository.save(rpiData1);
+
+        RpiData rpiData2 = new RpiData();
+        rpiData2.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        rpiData2.setMemory(67.6);
+        rpiData2.setCPU(98.2);
+        rpiDataRepository.save(rpiData2);
+
+
     }
 
     @Bean

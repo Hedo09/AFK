@@ -6,13 +6,16 @@ import WebChat from "./components/WebChat";
 import Cart from "./components/Cart";
 import ProductListing from "./components/ProductListing";
 import CategorySwitcher from "./components/CategorySwitcher";
-import {getCartDataToPost, getCategories, getProductsPerCategory, getUsers, postData, postDataLogin} from "./util/util";
+import {getCartDataToPost, getCategories, getProductsPerCategory, getUsers, postData, postDataLogin,getTemperatures,getHumidity,getSoilMoisture,getRpiDatas} from "./util/util";
 import urls from "./util/constants";
 import Login from "./components/Login";
 import Signin from "./components/Signin";
 import LoginFailed from "./components/LoginFailed";
 import Logout from "./components/Logout";
-import $ from "jquery";
+import RpiData from "./components/RpiData";
+import Humidity from "./components/Humidity";
+import SoilMoisture from "./components/SoilMoisture";
+import Temperature from "./components/Temperature";
 
 class App extends React.Component {
     state = {
@@ -25,8 +28,13 @@ class App extends React.Component {
         signedin: false,
         currentUserName: "",
         currentUserPassword: "",
-        authError: false
+        authError: false,
+        temperatures: [],
+        humidities: [],
+        soilmoistures: [],
+        rpiData: []
     };
+
 
 
     refreshCategories = () => {
@@ -40,6 +48,26 @@ class App extends React.Component {
     refreshUser = (u) => {
         this.state.currentUserName = u.name;
         getUsers(u.name).then((response) => this.setState({currentUserPassword: response.password}));
+    }
+
+    refreshTemperature = () => {
+        getTemperatures().then(response => this.setState({temperatures: response}));
+        console.log(this.state.temperatures);
+    }
+
+    refreshHumidity = () => {
+        getHumidity().then(response => this.setState({humidities: response}));
+        console.log(this.state.humidities);
+    }
+
+    refreshSoilMoisture = () => {
+        getSoilMoisture().then(response => this.setState({soilmoistures: response}));
+        console.log(this.state.soilmoistures);
+    }
+
+    refreshRpiData = () => {
+        getRpiDatas().then(response => this.setState({rpiData: response}));
+        console.log(this.state.rpiData);
     }
 
     categoryOnClick = (e) => {
@@ -146,6 +174,10 @@ class App extends React.Component {
                 {this.state.pageState === "login" ? (<Login onSendUser={this.sendUserLogin} onUserDataChange={this.userDataChange}/>): ""}
                 {this.state.pageState === "signin" ? (<Signin onSendUser={this.sendUserSignin} onUserDataChange={this.userDataChange}/>): ""}
                 {this.state.pageState === "logout" ? (<Logout onLogoutYes={this.userLogoutYes} onLogoutNo ={this.userLogoutNo} />):""}
+                {this.state.pageState === "rpidata"? (<RpiData onGetData ={this.refreshRpiData} rpidata={this.state.rpiData}/>):""}
+                {this.state.pageState === "humidity"? (<Humidity onGetData ={this.refreshHumidity} humidities={this.state.humidities}/>):""}
+                {this.state.pageState === "soilmoisture"? (<SoilMoisture onGetData ={this.refreshSoilMoisture} soilmoistures={this.state.soilmoistures}/>):""}
+                {this.state.pageState === "temperature"? (<Temperature onGetData ={this.refreshTemperature} temperatures={this.state.temperatures}/>):""}
             </div>
         );
     }

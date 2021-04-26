@@ -1,4 +1,4 @@
-package hu.bme.aut.webshop.auth.data;
+package hu.bme.aut.webshop.auth.data.user;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -18,7 +18,19 @@ const postData = (url, body) => {
         .then(response => response.data)
 };
 
+const timestampToDate = (timestamp) => {
+    return new Date (timestamp).toISOString()
+}
+
 const getCategories = () => getData(urls.CATEGORIES_URL);
+
+const getTemperatures = () => getData(urls.Temperature_URL);
+
+const getHumidity = () => getData(urls.Humidity_URL);
+
+const getSoilMoisture = () => getData(urls.SoilMoisture_URL);
+
+const getRpiDatas = () => getData(urls.RpiData_URL);
 
 const getUsers = (user_name) => getData(urls.USERS_URL+"/"+user_name);
 
@@ -62,5 +74,10 @@ export {
     getProductsPerCategory,
     getCartLinesFromCartData,
     getCartDataToPost,
-    countSubTotal
+    countSubTotal,
+    getTemperatures,
+    getHumidity,
+    getSoilMoisture,
+    getRpiDatas,
+    timestampToDate
 }

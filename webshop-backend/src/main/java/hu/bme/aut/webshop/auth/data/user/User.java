@@ -1,4 +1,4 @@
-package hu.bme.aut.webshop.auth.data;
+package hu.bme.aut.webshop.auth.data.user;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;

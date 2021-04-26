@@ -1,4 +1,4 @@
-package hu.bme.aut.webshop.auth.data;
+package hu.bme.aut.webshop.auth.data.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
