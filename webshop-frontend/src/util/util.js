@@ -24,15 +24,15 @@ const timestampToDate = (timestamp) => {
 
 const getCategories = () => getData(urls.CATEGORIES_URL);
 
-const getTemperatures = () => getData(urls.Temperature_URL);
+const getTemperatures = () => getData(urls.TEMPERATURE_URL);
 
-const getHumidity = () => getData(urls.Humidity_URL);
+const getHumidity = () => getData(urls.HUMIDITY_URL);
 
 const getSoilMoisture = () => getData(urls.SoilMoisture_URL);
 
-const getRpiDatas = () => getData(urls.RpiData_URL);
+const getRpiDatas = () => getData(urls.RPIDATA_URL);
 
-const getUsers = (user_name) => getData(urls.USERS_URL+"/"+user_name);
+const getUsers = () => getData(urls.USERS_URL);
 
 const getProductsPerCategory = (category) => getData(urls.CATEGORIES_URL + '/' + category.id + '/products');
 
@@ -55,6 +55,14 @@ const getCartDataToPost = (cart, name, address) => {
     result.quantityPerProductId = items;
     return result;
 };
+
+const postDataDelete = (url,body,name) => {
+    console.log(body.name + " "+body.password);
+    return axios.post(url, {name:name}, {
+        headers: {"Content-Type": "application/json"},
+        auth: {username: body.name, password: body.password}
+    });
+}
 
 const countSubTotal = (cart, products) => {
     let total = 0;
@@ -79,5 +87,6 @@ export {
     getHumidity,
     getSoilMoisture,
     getRpiDatas,
-    timestampToDate
+    timestampToDate,
+    postDataDelete
 }

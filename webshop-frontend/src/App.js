@@ -6,7 +6,7 @@ import WebChat from "./components/WebChat";
 import Cart from "./components/Cart";
 import ProductListing from "./components/ProductListing";
 import CategorySwitcher from "./components/CategorySwitcher";
-import {getCartDataToPost, getCategories, getProductsPerCategory, getUsers, postData, postDataLogin,getTemperatures,getHumidity,getSoilMoisture,getRpiDatas} from "./util/util";
+import {getCartDataToPost, getCategories, getProductsPerCategory, getUsers, postData, postDataLogin,getTemperatures,getHumidity,getSoilMoisture,getRpiDatas,postDataDelete} from "./util/util";
 import urls from "./util/constants";
 import Login from "./components/Login";
 import Signin from "./components/Signin";
@@ -16,6 +16,8 @@ import RpiData from "./components/RpiData";
 import Humidity from "./components/Humidity";
 import SoilMoisture from "./components/SoilMoisture";
 import Temperature from "./components/Temperature";
+import User from "./components/User";
+import PieChart from "./components/PieChart";
 
 class App extends React.Component {
     state = {
@@ -32,7 +34,8 @@ class App extends React.Component {
         temperatures: [],
         humidities: [],
         soilmoistures: [],
-        rpiData: []
+        rpiData: [],
+        users: []
     };
 
 
@@ -68,6 +71,15 @@ class App extends React.Component {
     refreshRpiData = () => {
         getRpiDatas().then(response => this.setState({rpiData: response}));
         console.log(this.state.rpiData);
+    }
+    showUsers = () => {
+        getUsers().then(response => this.setState({users: response}));
+        console.log(this.state.users);
+    }
+
+    deleteUser = (name) => {
+        let auth = {name: this.state.currentUserName, password: this.state.currentUserPassword};
+        postDataDelete(urls.DELETESER_URL,auth,name);
     }
 
     categoryOnClick = (e) => {
@@ -178,6 +190,8 @@ class App extends React.Component {
                 {this.state.pageState === "humidity"? (<Humidity onGetData ={this.refreshHumidity} humidities={this.state.humidities}/>):""}
                 {this.state.pageState === "soilmoisture"? (<SoilMoisture onGetData ={this.refreshSoilMoisture} soilmoistures={this.state.soilmoistures}/>):""}
                 {this.state.pageState === "temperature"? (<Temperature onGetData ={this.refreshTemperature} temperatures={this.state.temperatures}/>):""}
+                {this.state.pageState === "users"? (<User onGetData ={this.showUsers} onDeleteUser={this.deleteUser.bind(this)} users={this.state.users}/>):""}
+                {this.state.pageState === "piechart"? (<PieChart onGetData ={this.showUsers} onDeleteUser={this.deleteUser.bind(this)} users={this.state.users}/>):""}
             </div>
         );
     }

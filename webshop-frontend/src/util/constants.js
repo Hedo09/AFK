@@ -6,9 +6,10 @@ const LOGIN_URL = BASE_URL + "/login";
 const SIGNIN_URL = BASE_URL + "/signin";
 const USERS_URL = BASE_URL + "/users";
 const ME_URL = BASE_URL+ "/me";
-const Temperature_URL = BASE_URL + "/measurements/temperature";
-const Humidity_URL = BASE_URL + "/measurements/humidity";
+const TEMPERATURE_URL = BASE_URL + "/measurements/temperature";
+const HUMIDITY_URL = BASE_URL + "/measurements/humidity";
 const SoilMoisture_URL = BASE_URL + "/measurements/soilmoisture";
-const RpiData_URL = BASE_URL + "/rpidatas"
+const RPIDATA_URL = BASE_URL + "/rpidatas";
+const DELETESER_URL = BASE_URL + "/deleteuser";
 
-export default {BASE_URL, CATEGORIES_URL, ORDER_URL, CHAT_URL,LOGIN_URL,SIGNIN_URL,USERS_URL,ME_URL,Temperature_URL,Humidity_URL,SoilMoisture_URL,RpiData_URL};
+export default {BASE_URL, CATEGORIES_URL, ORDER_URL, CHAT_URL,LOGIN_URL,SIGNIN_URL,USERS_URL,ME_URL,TEMPERATURE_URL,HUMIDITY_URL,SoilMoisture_URL,RPIDATA_URL,DELETESER_URL};

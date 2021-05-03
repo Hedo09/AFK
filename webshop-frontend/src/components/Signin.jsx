@@ -23,7 +23,7 @@ class Signin extends React.Component {
                         <label htmlFor="userName">Username:</label>
                         <input id="userName" type="text" className="form-control" onChange={this.props.onUserDataChange}/>
                         <label htmlFor="password">Password:</label>
-                        <input id="password" type="text" className="form-control" onChange={this.props.onUserDataChange}/>
+                        <input id="password" type="password" className="form-control" onChange={this.props.onUserDataChange}/>
                         <button className="btn btn-defaultt"><span className="glyphicon glyphicon-ok"
                                                                    onClick={this.props.onSendUser}/>
                         </button>
