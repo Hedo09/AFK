@@ -27,7 +27,6 @@ const CategorySwitcher = (props) => (
                     <li data-state="signin" onClick={props.onChangePageState} className="signin"><a className="nav-link">Sign In</a></li>
                     <li data-state="logout" onClick={props.onChangePageState} className="logout"><a className="nav-link">Logout</a></li>
                     <li data-state="users" onClick={props.onChangePageState} className="users"><a className="nav-link">Users</a></li>
-                    <li data-state="piechart" onClick={props.onChangePageState} className="piechart"><a className="nav-link">Piechart</a></li>
                 </ul>
             </div>
         </div>

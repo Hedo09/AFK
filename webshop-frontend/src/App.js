@@ -17,7 +17,6 @@ import Humidity from "./components/Humidity";
 import SoilMoisture from "./components/SoilMoisture";
 import Temperature from "./components/Temperature";
 import User from "./components/User";
-import PieChart from "./components/PieChart";
 
 class App extends React.Component {
     state = {
@@ -191,7 +190,6 @@ class App extends React.Component {
                 {this.state.pageState === "soilmoisture"? (<SoilMoisture onGetData ={this.refreshSoilMoisture} soilmoistures={this.state.soilmoistures}/>):""}
                 {this.state.pageState === "temperature"? (<Temperature onGetData ={this.refreshTemperature} temperatures={this.state.temperatures}/>):""}
                 {this.state.pageState === "users"? (<User onGetData ={this.showUsers} onDeleteUser={this.deleteUser.bind(this)} users={this.state.users}/>):""}
-                {this.state.pageState === "piechart"? (<PieChart onGetData ={this.showUsers} onDeleteUser={this.deleteUser.bind(this)} users={this.state.users}/>):""}
             </div>
         );
     }
